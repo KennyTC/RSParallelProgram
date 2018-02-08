@@ -5,11 +5,11 @@ from collections import defaultdict
 
 class MaximalEquivalence:
     def __init__(self):
-        self.path = os.getcwd()
+        self.dirname = os.path.dirname()
         # self.ec_result = self.path + "/ec_result.txt"
-        self.ec_result_missing = self.path + "/ec_result_missing.txt"
-        self.ec_result_normal = self.path + "/ec_result_normal.txt"
-        self.poss_result = self.path + "/poss_result.txt"
+        self.ec_result_missing = os.path.join(self.path, "/ec_result_missing.txt")
+        self.ec_result_normal = os.path.join(self.path, "/ec_result_normal.txt")
+        self.poss_result = os.path.join(self.path,"/poss_result.txt")
 
     def convert_value_to_set(self, value):
         list_ret = value.split(",")
@@ -31,6 +31,15 @@ class MaximalEquivalence:
             return dict_ret
         except Exception as e:
             print(e)
+
+    def powerset_of_missing(items):
+        N = len(items)
+        for i in range(2 ** N):
+            ret = []
+            for j in range(N):
+                if (i >> j) % 2 == 1:
+                    ret.append(items[j])
+            yield ret
 
     def poss(self):
         try:
