@@ -10,6 +10,8 @@ class PossibleEquivalence:
         self.ec_result_missing = os.path.join(self.dirname, "ec_result_missing.txt")
         self.ec_result_normal = os.path.join(self.dirname, "ec_result_normal.txt")
         self.poss_result = os.path.join(self.dirname, "poss_result.txt")
+        self.poss_result_attributes = os.path.join(self.dirname, "poss_result_attributes.txt")
+        self.poss_result_decision = os.path.join(self.dirname, "poss_result_decision.txt")
 
     def convert_value_to_set(self, value):
         list_ret = value.split(",")
@@ -44,6 +46,9 @@ class PossibleEquivalence:
                     ret.add(list_of_value[j])
             yield ret
 
+    """
+        Do possible equivalence classes
+    """
     def poss(self):
         try:
             dict_of_power_of_missing = self.dict_of_power_of_missing()
@@ -87,6 +92,22 @@ class PossibleEquivalence:
         except Exception as e:
             print(e)
 
+    """ Split poss result into 2 files: poss_result_attributes.txt and poss_result_decision.txt
+    """
+    def split_poss_result(self):
+        f = open(self.poss_result, "r")
+        l_lines = f.read().splitlines()
+
+        f_attributes = open(self.poss_result_attributes, "w+")
+        f_decision = open(self.poss_result_decision, "w+")
+
+        for l_line in l_lines[:-1]:
+                f_attributes.write("{line}\n".format(line=l_line))
+        f_decision.write("{line}\n".format(line=l_lines[-1]))
+        f_attributes.close()
+        f_decision.close()
+
 
 a = PossibleEquivalence()
 a.poss()
+a.split_poss_result()
