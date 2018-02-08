@@ -69,5 +69,5 @@ class PossibleEquivalence:
             print(e)
 
 a = PossibleEquivalence()
-for i in a.powerset_of_missing([1,3,5]):
+for i in a.powerset_of_missing((1,3,5)):
     print(i)
